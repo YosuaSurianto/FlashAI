@@ -21,7 +21,7 @@ contract FlashAICreditsTest is Test {
     // Re-declare events for vm.expectEmit (Solidity 0.8.20 limitation)
     event CreditToppedUp(address indexed user, uint256 amount, uint256 newBalance);
     event CreditUsed(address indexed user, uint256 cost, string serviceType, uint256 remainingBalance);
-    event AuthorizedAgentSet(address indexed oldAgent, address indexed newAgent)
+    event AuthorizedAgentSet(address indexed oldAgent, address indexed newAgent);
 
     FlashAICredits public flashai;
     MockCUSD       public cusd;
