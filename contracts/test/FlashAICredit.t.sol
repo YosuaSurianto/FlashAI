@@ -18,6 +18,11 @@ contract MockCUSD is ERC20 {
 // ─── Main Test Contract ───────────────────────────────────────────────────────
 
 contract FlashAICreditsTest is Test {
+    // Re-declare events for vm.expectEmit (Solidity 0.8.20 limitation)
+    event CreditToppedUp(address indexed user, uint256 amount, uint256 newBalance);
+    event CreditUsed(address indexed user, uint256 cost, string serviceType, uint256 remainingBalance);
+    event AuthorizedAgentSet(address indexed oldAgent, address indexed newAgent)
+
     FlashAICredits public flashai;
     MockCUSD       public cusd;
 
@@ -91,7 +96,7 @@ contract FlashAICreditsTest is Test {
         cusd.approve(address(flashai), amount);
 
         vm.expectEmit(true, false, false, true);
-        emit FlashAICredits.CreditToppedUp(alice, amount, amount);
+        emit CreditToppedUp(alice, amount, amount);
 
         flashai.topUp(amount);
         vm.stopPrank();
@@ -182,7 +187,7 @@ contract FlashAICreditsTest is Test {
         uint256 expectedBalance = 1 ether - cost;
 
         vm.expectEmit(true, false, false, true);
-        emit FlashAICredits.CreditUsed(alice, cost, "translate", expectedBalance);
+        emit CreditUsed(alice, cost, "translate", expectedBalance);
 
         vm.prank(agent);
         flashai.useCredit(alice, cost, "translate");
@@ -297,7 +302,7 @@ contract FlashAICreditsTest is Test {
         address oldAgent = flashai.authorizedAgent();
 
         vm.expectEmit(true, true, false, false);
-        emit FlashAICredits.AuthorizedAgentSet(oldAgent, newAgent);
+        emit AuthorizedAgentSet(oldAgent, newAgent);
 
         vm.prank(owner);
         flashai.setAuthorizedAgent(newAgent);

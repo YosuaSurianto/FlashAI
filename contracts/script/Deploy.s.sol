@@ -56,7 +56,7 @@ contract DeployFlashAI is Script {
         vm.stopBroadcast();
 
         console.log("");
-        console.log("✅ FlashAICredits deployed at:", address(flashai));
+        console.log(">> FlashAICredits deployed at:", address(flashai));
         console.log("");
         console.log("Next steps:");
         console.log("  1. Copy contract address above");

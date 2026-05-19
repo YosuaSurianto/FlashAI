@@ -54,7 +54,7 @@ contract SetAgentScript is Script {
         vm.stopBroadcast();
 
         console.log("");
-        console.log("✅ authorizedAgent set to:", agentAddr);
+        console.log(">> authorizedAgent set to:", agentAddr);
         console.log("");
         console.log("Verify onchain:");
         console.log("  cast call", contractAddr, "'authorizedAgent()' --rpc-url celo");
